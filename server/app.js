@@ -6,8 +6,11 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var cors = require('cors');
 
-var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var authRouter = require('./routes/auth');
+var projectRoutes = require('./routes/projectRoutes');
+var layerRoutes = require('./routes/layerRoutes');
+var imageRoutes = require('./routes/imageRoutes');
 
 var app = express();
 
@@ -21,17 +24,16 @@ app.set('trust proxy', 1);
 app.enable('trust proxy');
 
 app.use(
-    cors({
-      origin: [process.env.REACT_APP_URI]  // <== URL of our future React app
-    })
-  );
+  cors({
+    origin: [process.env.REACT_APP_URI],
+  })
+);
 
-// app.use(
-//     cors()
-//   );
-
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/auth', authRouter);
+app.use('/projects', projectRoutes);
+app.use('/projects/:projectId/layers', layerRoutes);
+app.use('/', imageRoutes); 
 
 mongoose
   .connect(process.env.MONGODB_URI)
