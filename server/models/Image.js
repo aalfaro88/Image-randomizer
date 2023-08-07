@@ -1,15 +1,16 @@
 // models/Image.js
+
 const mongoose = require("mongoose");
 
 const imageSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      // required: true,
     },
     alt: {
       type: String,
-      required: true,
+      // required: true,
     },
     timestamp: {
       type: Date,

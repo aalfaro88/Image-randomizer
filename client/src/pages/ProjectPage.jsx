@@ -10,7 +10,14 @@ function ProjectPage() {
   const [project, setProject] = useState(null);
   const [newLayerName, setNewLayerName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [layerImages, setLayerImages] = useState({}); // New state to store images for each layer
+  const [layerImages, setLayerImages] = useState({}); 
+  const [filesArray, setFilesArray] = useState([]);
+
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    console.log("Selected Files:", files);
+    setFilesArray(files);
+  };
 
   const handleCheckButton = (layerId) => {
     console.log("Layer ID:", layerId);
@@ -82,32 +89,37 @@ function ProjectPage() {
   };
 
   const handleImageUpload = async (layerId) => {
-    if (!selectedFile) {
-      console.error("No file selected.");
+    if (filesArray.length === 0) {
+      console.error("No files selected.");
       return;
     }
-
+  
     try {
-      const imageId = await uploadImage(selectedFile, projectId, layerId);
-
+      console.log("Files Array:", filesArray); 
+  
+      const imageIds = await Promise.all(
+        filesArray.map((file) => uploadImage(file, projectId, layerId))
+      );
+  
       const updatedProject = {
         ...project,
         layers: project.layers.map((layer) =>
-          layer._id === layerId 
+          layer._id === layerId
             ? {
                 ...layer,
-                images: [...layer.images, imageId],
+                images: [...layer.images, ...imageIds],
               }
             : layer
         ),
       };
-
+  
       setProject(updatedProject);
-      setSelectedFile(null);
+      setFilesArray([]);
     } catch (error) {
-      console.error("Error uploading image:", error);
+      console.error("Error uploading images:", error);
     }
   };
+  
 
   return (
     <div>
@@ -126,24 +138,24 @@ function ProjectPage() {
           <h3>{layer.name}</h3>
           {layerImages[layer._id] && layerImages[layer._id].length > 0 ? (
             <div>
-              {layerImages[layer._id].map((image, imageIndex) => {
+              {/* {layerImages[layer._id].map((image, imageIndex) => {
                 console.log("Image URL:", image.url); // Add this line to log the URL
                 return (
                   <img
                     key={imageIndex}
                     src={image.url} // Assuming the response object has a 'url' property
                     alt={`Image ${imageIndex}`}
-                  />
-                );
-              })}
+                  /> */}
+                {/* );
+              })} */}
             </div>
           ) : (
             <p>No images in this layer.</p>
           )}
 
-          <input type="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
-          <button onClick={() => handleImageUpload(layer._id)}>Upload Image</button>
-          <button onClick={() => handleCheckButton(layer._id)}>Check</button>
+      <input type="file" onChange={handleFileChange} multiple />
+      <button onClick={() => handleImageUpload(layer._id)}>Upload Images</button>
+      <button onClick={() => handleCheckButton(layer._id)}>Check</button>
         </div>
       ))}
     </div>
@@ -151,3 +163,4 @@ function ProjectPage() {
 }
 
 export default ProjectPage;
+

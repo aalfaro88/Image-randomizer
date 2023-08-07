@@ -13,21 +13,29 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: (req, file) => {
-    
     const projectId = req.params.projectId;
     const layerId = req.params.layerId;
     const filename = file.originalname.replace(/\.[^/.]+$/, ""); 
-   
+
     console.log("Project ID:", projectId);
     console.log("Layer ID:", layerId);
     console.log("Image Name:", file.originalname);
 
     const folder = `Image-randomizer/${projectId}/${layerId}`;
 
+    const imageUrl = cloudinary.url(filename, {
+      public_id: `${folder}/${filename}`,
+      format: "png",
+      secure: true, 
+    });
+
+    console.log("Image URL:", imageUrl); 
+
     return {
       folder,
       format: "png",
       public_id: filename,
+      access_mode: "public",
     };
   },
 });
@@ -35,4 +43,3 @@ const storage = new CloudinaryStorage({
 const uploadImg = multer({ storage });
 
 module.exports = uploadImg;
-

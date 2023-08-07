@@ -42,6 +42,8 @@ export const uploadImage = async (file, projectId, layerId) => {
   
     const formData = new FormData();
     formData.append("picture", file);
+    console.log("This is file:",file)
+    console.log(typeof file)
   
     const token = localStorage.getItem("authToken");
   
