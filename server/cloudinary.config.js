@@ -23,6 +23,7 @@ const storage = new CloudinaryStorage({
 
     const folder = `Image-randomizer/${projectId}/${layerId}`;
 
+
     const imageUrl = cloudinary.url(filename, {
       public_id: `${folder}/${filename}`,
       format: "png",
@@ -40,6 +41,15 @@ const storage = new CloudinaryStorage({
   },
 });
 
+const deleteCloudinaryFolder = async (folderPath) => {
+  try {
+    const result = await cloudinary.api.delete_resources_by_prefix(folderPath);
+    console.log("Deleted Cloudinary folder:", result);
+  } catch (error) {
+    console.error("Error deleting Cloudinary folder:", error);
+  }
+};
+
 const uploadImg = multer({ storage });
 
-module.exports = uploadImg;
+module.exports = { uploadImg, deleteCloudinaryFolder};

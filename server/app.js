@@ -11,6 +11,8 @@ var authRouter = require('./routes/auth');
 var projectRoutes = require('./routes/projectRoutes');
 var layerRoutes = require('./routes/layerRoutes');
 var imageRoutes = require('./routes/imageRoutes');
+var randomizeRoutes = require('./routes/randomizeRoutes')
+var deleteCloudinaryFolderRoute = require("./routes/deleteCloudinaryFolder");
 
 var app = express();
 
@@ -34,6 +36,8 @@ app.use('/auth', authRouter);
 app.use('/projects', projectRoutes);
 app.use('/projects/:projectId/layers', layerRoutes);
 app.use('/', imageRoutes); 
+app.use('/', randomizeRoutes);
+app.use("/delete-cloudinary-folder", deleteCloudinaryFolderRoute); 
 
 mongoose
   .connect(process.env.MONGODB_URI)

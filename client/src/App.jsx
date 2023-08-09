@@ -5,7 +5,8 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import CreateProjectPage from "./pages/CreateProjectPage";
 import ProjectPage from "./pages/ProjectPage";
-import ProjectsPage from "./pages/ProjectsPage"; // New component to display all projects
+import ProjectsPage from "./pages/ProjectsPage";
+import RandomizePage from './pages/RandomizePage';
 
 function App() {
   const getToken = () => {
@@ -21,15 +22,15 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div>
       <Navbar />
 
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/create-project" element={<CreateProjectPage />} />
-        <Route path="/projects" element={<ProjectsPage />} /> {/* New route for displaying all projects */}
+        <Route path="/projects" element={<ProjectsPage />} /> 
         <Route path="/projects/:projectId" element={<ProjectPage />} />
-
+        <Route path="/randomize" element={<RandomizePage />} />
         <Route element={<LoggedIn />}>
         </Route>
 

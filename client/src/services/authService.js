@@ -66,3 +66,6 @@ export const uploadImage = async (file, projectId, layerId) => {
     return get(`/images/${projectId}/${layerId}`);
   };
   
+  export const deleteCloudinaryFolder = (projectId) => {
+    return axios.delete(`${SERVER_URL}/delete-cloudinary-folder/${projectId}`);
+  };

@@ -10,29 +10,33 @@ function Navbar() {
   };
 
   return (
-    <nav>
-      <Link to="/">
-        <button>Home</button>
-      </Link>
+    <nav className="navbar">
+      <div className="left-buttons">
+        <Link to="/">
+          <button>Home</button>
+        </Link>
+      </div>
 
-      {getToken() ? (
-        <>
-          <Link to="/projects"> {/* Add the link to the projects page */}
-            <button>Projects</button>
-          </Link>
-          <button onClick={logOutUser}>Logout</button>
-          <span>{user && user.username}</span>
-        </>
-      ) : (
-        <>
-          <Link to="/signup">
-            <button>Sign Up</button>
-          </Link>
-          <Link to="/login">
-            <button>Login</button>
-          </Link>
-        </>
-      )}
+      <div className="right-buttons">
+        {getToken() ? (
+          <>
+            <Link to="/projects">
+              <button>Projects</button>
+            </Link>
+            <button onClick={logOutUser}>Logout</button>
+            {/* <span>{user && user.username}</span> */}
+          </>
+        ) : (
+          <>
+            <Link to="/signup">
+              <button>Sign Up</button>
+            </Link>
+            <Link to="/login">
+              <button>Login</button>
+            </Link>
+          </>
+        )}
+      </div>
     </nav>
   );
 }

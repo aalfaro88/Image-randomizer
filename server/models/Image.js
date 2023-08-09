@@ -1,16 +1,14 @@
 // models/Image.js
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const imageSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      // required: true,
     },
     alt: {
       type: String,
-      // required: true,
     },
     timestamp: {
       type: Date,
@@ -20,6 +18,10 @@ const imageSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Image = mongoose.model("Image", imageSchema);
+const Image = mongoose.model('Image', imageSchema);
 
-module.exports = Image;
+module.exports = {
+  Image,
+  imageSchema,
+};
+

@@ -25,7 +25,7 @@ router.post('/', isAuthenticated, async (req, res) => {
 
     project.layers.push(newLayer);
 
-    console.log('Saving layer to MongoDB:', project); // Add this line to log the layers before saving
+    console.log('Saving layer to MongoDB:', req.originalUrl); 
 
     await project.save();
 
