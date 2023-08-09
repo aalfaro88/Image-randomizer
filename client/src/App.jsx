@@ -39,6 +39,12 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
         </Route>
       </Routes>
+
+      <footer>
+        <div className="footer">
+          Copyright © 2023 Image Jumble
+        </div>
+      </footer>
     </div>
   );
 }

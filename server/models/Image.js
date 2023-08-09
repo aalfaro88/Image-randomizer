@@ -6,6 +6,7 @@ const imageSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      unique: true, 
     },
     alt: {
       type: String,

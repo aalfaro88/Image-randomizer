@@ -25,6 +25,10 @@ router.post("/overlay-images", async (req, res) => {
       context.drawImage(baseImage, 0, 0);
 
       for (let i = 1; i < imageUrls.length; i++) {
+        if (imageUrls[i].length === 0) {
+          continue;
+        }
+
         const overlayImageIndex = Math.floor(Math.random() * imageUrls[i].length);
         const overlayImageUrl = imageUrls[i][overlayImageIndex];
         const overlayImage = await loadImage(overlayImageUrl);
@@ -43,4 +47,5 @@ router.post("/overlay-images", async (req, res) => {
 });
 
 module.exports = router;
+
 
